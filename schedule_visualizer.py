@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Aug 15 10:38:34 2025
-this is a cleaned up version of v6
 """
 
 import pandas as pd
@@ -10,6 +9,9 @@ import matplotlib.pyplot as plt
 import matplotlib as mlt
 import matplotlib.ticker as ticker
 from datetime import datetime
+
+import tkinter as tk
+from tkinter import filedialog
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -122,6 +124,7 @@ def show_schedule(df3, savefile, to_save=False):
     
     fig.tight_layout()
     
+    plt.close()
     plt.show()
     if to_save ==True:
         fig.savefig(savefile + '.png', dpi=fig.dpi)
@@ -135,7 +138,21 @@ def change_string(df, to_delete):
         df[to_delete] = df[to_delete].str.replace(to_delete, '')
 
 
-filename = 'View_My_Courses.xlsx'
+# Referenced from https://blog.filestack.com/python-file-picker-methods/
+# Create the root window and hide it
+root = tk.Tk()
+root.withdraw()
+
+print("Select courses file")
+
+# Single file selection
+filename = filedialog.askopenfilename(
+    title="Select a File",
+    filetypes=[("Excel files", "*.xlsx"), ("All Files", "*.*")]
+)
+
+if filename == '':
+    quit()
 
 df = pd.read_excel(filename)
 
@@ -230,11 +247,12 @@ for i in ('9', '1', '5', '7'):
     if not c.empty:    
         dfs.append(c)
 
-to_save = input('Save images? [y/n]: ')
-if to_save.lower() == 'y':
-    to_save=True
-else:
-    to_save = False
+to_save = False
+# to_save = input('Save images? [y/n]: ')
+# if to_save.lower() == 'y':
+#     to_save=True
+# else:
+#     to_save = False
 
 for index in range(len(dfs)):
     show_schedule(dfs[index], 'Schedule ' + str(index+1), to_save)
