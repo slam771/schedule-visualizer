@@ -5,8 +5,6 @@ Generates images for timetables in a weekly format for UBC courses.
 ## Downloading and setting up
 
 1. Click on the green code button and press **Download ZIP** on this page
-    ![alt text](image.png)
-
 2. Unzip the file
 3. Open Terminal or Command Prompt or similar app
 4. Navigate to the folder using the command prompt
